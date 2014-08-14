@@ -1,0 +1,9 @@
+<%= form_tag('/get-trains') do -%>
+    <div class="form_row">
+      <label for="journey_type">Journey Type :</label>
+      <% [ 'one_way', 'round trip', 'multipart' ].each do |type| %>
+          <br><%= radio_button_tag 'journey_type', type  %>
+          <%= type.humanize %>
+      <% end %>
+    </div>
+<% end -%>

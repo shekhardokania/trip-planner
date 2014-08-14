@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  station_id: 1
+  train_id: 1
+  arrival_time: 2014-08-12 20:22:55
+  departure_time: 2014-08-12 20:22:55
+  station_number: 1
+
+two:
+  station_id: 1
+  train_id: 1
+  arrival_time: 2014-08-12 20:22:55
+  departure_time: 2014-08-12 20:22:55
+  station_number: 1

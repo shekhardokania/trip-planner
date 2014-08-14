@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="764637279">
+    <data-source source="LOCAL" name="Rails trip-planner: development" uuid="52a2ac27-ba92-48f6-aaf9-7f32b89183b9">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/trip_planner_development</jdbc-url>
+      <user-name>hem</user-name>
+      <user-password>dfc2dfcfdfc7df98df9adf9bdf9edf8b</user-password>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/RubyMine50/jdbc-drivers/mysql-connector-java-5.1.26-bin.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="Rails trip-planner: test" uuid="1bda4f9b-3566-4491-addf-86dbfff73537">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/trip_planner_development</jdbc-url>
+      <user-name>hem</user-name>
+      <user-password>dfc2dfcfdfc7df98df9adf9bdf9edf8b</user-password>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/RubyMine50/jdbc-drivers/mysql-connector-java-5.1.26-bin.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="Rails trip-planner: production" uuid="a2dfd7cb-85a0-4222-93f1-63dec782fc29">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/trip_planner_development</jdbc-url>
+      <user-name>hem</user-name>
+      <user-password>dfc2dfcfdfc7df98df9adf9bdf9edf8b</user-password>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Library/Preferences/RubyMine50/jdbc-drivers/mysql-connector-java-5.1.26-bin.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+
