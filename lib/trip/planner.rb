@@ -11,6 +11,7 @@ module Trip
 
     def valid_params?
       return false if (@journey_date.blank? || @start_station.blank? || @end_station.blank? || @journey_type.blank?)
+      return false if (@start_station == @end_station)
       return true
     end
 
@@ -95,7 +96,7 @@ module Trip
     end
 
     def valid_params?
-      super && @journey_date2.present?
+      super && @journey_date2.present? && (@journey_date2 > @journey_date)
     end
 
     def plan
@@ -112,7 +113,7 @@ module Trip
     end
 
     def valid_params?
-      super && @journey_date2.present? && @via_station.present?
+      super && @journey_date2.present? && @via_station.present? && (@journey_date2 > @journey_date)  && @start_station != @via_station && @via_station != @end_station
     end
 
     def plan

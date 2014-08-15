@@ -1,20 +1,24 @@
-<%=form_tag('/list-trains',class: "form-horizontal center" )  do  %>
-   <label class="radio-inline">
+<div class="centered">
+    <%=form_tag('/list-trains',class: "form-horizontal center" )  do  %>
+    <label class="radio-inline">
       <%= radio_button_tag :journey_type, 'one_way', true, checked: true %> One Way
     </label>
-   <label class="radio-inline">
+    <label class="radio-inline">
         <%= radio_button_tag :journey_type, 'round_trip',false%> Round Trip
     </label>
-   <label class="radio-inline">
+    <label class="radio-inline">
         <%= radio_button_tag :journey_type, 'multi_part', false %> Multipart
     </label>
+    </br></br></br>
 
     <%= select_tag "start_station", options_from_collection_for_select(@stations, "id", "name") %>
     <%= select_tag "via_station", options_from_collection_for_select(@stations, "id", "name"),hidden: true %>
     <%= select_tag "end_station", options_from_collection_for_select(@stations, "id", "name") %>
+    </br></br></br>
 
-
-    <%= text_field_tag :journey_date  %>
+    <%= text_field_tag :journey_date,nil,placeholder: "Date(YYYY-MM-DD)"  %>
     <%= text_field_tag :journey_date2,nil,hidden: true%>
-   <%= submit_tag "Find Trains",class: "btn btn-default btn-primary" %>
-<% end %>
+    </br></br></br>
+    <%= submit_tag "Find Trains",class: "btn btn-default btn-primary" %>
+    <% end %>
+</div>
