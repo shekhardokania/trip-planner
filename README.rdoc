@@ -1,28 +1,48 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+PROBLEM STATEMENT:
 
-Things you may want to cover:
+Given train schedules,a pair of stations,journey dates and journey type find all possible trains between the station if no direct train present
+find train using one intermediate station.
+========================================================================================================================
+Solution Design
 
-* Ruby version
+I have modeled trains, stations, train_station and train_path as the domain objects.
+Train (Name,Number, Start Station,End Station)
+Train has one start station and one end station.
+Station (:name, :code)
+TrainStation (:station_id,:train_id,:arrival_time,:departure_time,:station_number,:running_days)
+TrainPath(:to_station_id,:from_station_id,:duration,running_days)
 
-* System dependencies
+TrainPath stores all possible combinations of stations covered by a train,calculated using a rake task which can be scheduled to run on given
+intervals on can be run whenever train_stations are updated.
 
-* Configuration
+Trains and stations have many_to_many relationship through train_station
+========================================================================================================================
+LOGIC:
+One Way: Search trains in train_path starting and ending with given stations and filter all the trains which run on the given day.
+If no direct train is found find stations reachable from given start station using train_path and stations from which end station can be reached,
+Intersection of both the values will give us all possible intermediate stations
+Find trains to intermediate station and trains from intemediate station.
 
-* Database creation
+RoundTrip: RoundTrip is a combination of two one way trip with start and end station swapped with return date greater than start date.
 
-* Database initialization
+MultiPart Trip: Multipart trip is a combination of two one way trip (start -> via and via -> end).
+========================================================================================================================
+Path to relevant files.
 
-* How to run the test suite
+trip-planner/lib/tasks/populate_train_path.rake
 
-* Services (job queues, cache servers, search engines, etc.)
+trip-planner/lib/trip/planner.rb
 
-* Deployment instructions
+trip-planner/app/models/train_station.rb
+trip-planner/app/models/train_path.rb
+trip-planner/app/models/station.rb
+trip-planner/app/models/train.rb
 
-* ...
+trip-planner/app/controllers/planner_controller.rb
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+
+
+
