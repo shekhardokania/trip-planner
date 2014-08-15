@@ -1,0 +1,30 @@
+<h2> Towards Train </h2>
+<% options = @options[:to] %>
+<% if options[:direct] %>
+    <h2> Direct Trains </h2>
+    <%= render :partial => 'train_details',:locals => {:trains => options[:direct] } %>
+<% else %>
+    <h4> No Direct trains <h4>
+      <% options.each_pair do |via,trains| %>
+          <p> You can go via  <%= via %>
+          <p> Train to <%= via %>  </p>
+          <%= render :partial => 'train_details',:locals => {:trains => trains[:to] } %>
+          <p> Train from <%= via %> </p>
+          <%= render :partial => 'train_details',:locals => {:trains => trains[:from] } %>
+      <%end %>
+<% end %>
+<h2> Onwards Train </h2>
+<% options = @options[:fro] %>
+<% if options[:direct] %>
+    <h2> Direct Trains </h2>
+    <%= render :partial => 'train_details',:locals => {:trains => options[:direct] } %>
+<% else %>
+    <h4> No Direct trains <h4>
+      <% options.each_pair do |via,trains| %>
+          <p> You can go via  <%= via %>
+          <p> Train to <%= via %>  </p>
+          <%= render :partial => 'train_details',:locals => {:trains => trains[:to] } %>
+          <p> Train from <%= via %> </p>
+          <%= render :partial => 'train_details',:locals => {:trains => trains[:from] } %>
+      <%end %>
+<% end %>

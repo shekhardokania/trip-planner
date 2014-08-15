@@ -1,0 +1,25 @@
+<table class="table">
+  <tr>
+    <td class="active">Train numbner</td>
+    <td class="success">Train name</td>
+    <td class="warning">Start staion</td>
+    <td class="warning">Running Days</td>
+    <td class="danger">End Station</td>
+    <td class="info">Departure Time</td>
+    <td class="info">Arrival Time</td>
+    <td class="info"> Duration (Hrs)</td>
+  </tr>
+  <% trains.each do |train| %>
+    <tr>
+        <td class="active"><%= train[:train_number] %></td>
+        <td class="success"><%= train[:train_name] %></td>
+        <td class="warning"><%= train[:start_station_name] %></td>
+        <td class="warning"><%= train[:running_days] %></td>
+        <td class="danger"><%= train[:end_station_name] %></td>
+        <td class="info"><%= train[:departure_time] %></td>
+        <td class="info"><%= train[:arrival_time] %></td>
+        <td class="info"> <%= train[:duration] %></td>
+    </tr>
+  <% end %>
+
+</table>

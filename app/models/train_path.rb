@@ -10,7 +10,9 @@ class TrainPath < ActiveRecord::Base
   # * <tt>journey_date</tt>: date of the journey
 
   def self.get_direct_trains_between_stations(params)
-    where(:from_station => params[:start_station],:to_station => params[:end_station]).includes(:to_station,:from_station,:train).select do |train_path|
+    all_path = where(:from_station => params[:start_station],:to_station => params[:end_station]).includes(:to_station,:from_station,:train).all
+    return all_path if params[:journey_date].blank?
+    all_path.select do |train_path|
       TrainStation.get_running_days_from_code(train_path.running_days)[params[:journey_date].strftime("%A").downcase.to_sym]
     end
   end
@@ -30,12 +32,7 @@ class TrainPath < ActiveRecord::Base
     end
     return [] unless start_station_trains_path.present?
 
-    end_station_trains_path = []
-    where(:to_station => params[:end_station]).includes(:to_station,:from_station,:train).each do |train_path|
-      if TrainStation.get_running_days_from_code(train_path.running_days)[params[:journey_date].strftime("%A").downcase.to_sym]
-        end_station_trains_path << train_path
-      end
-    end
+    end_station_trains_path = where(:to_station => params[:end_station]).includes(:to_station,:from_station,:train).all
     return [] unless end_station_trains_path.present?
 
     to_stations_for_from_station = start_station_trains_path.collect(&:to_station_id)
@@ -47,8 +44,8 @@ class TrainPath < ActiveRecord::Base
     via_stations.uniq.each do |vs|
      all_pos_trains[vs] ||= {:to => [],:from => []}
      all_pos_trains[vs][:to] += get_direct_trains_between_stations(:start_station => params[:start_station],:end_station => vs,:journey_date => params[:journey_date])
-     all_pos_trains[vs][:from] += get_direct_trains_between_stations(:start_station => vs,:end_station => params[:end_station],:journey_date => params[:journey_date])
-    end
+     all_pos_trains[vs][:from] += get_direct_trains_between_stations(:start_station => vs,:end_station => params[:end_station])
+  end
     all_pos_trains
   end
 

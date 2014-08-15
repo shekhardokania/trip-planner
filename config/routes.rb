@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :stations
   get 'planner-index' => 'planner#index', as: :planner_index
+  post 'list-trains' => 'planner#list_trains_one_way', as: :list_trains_one_way
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

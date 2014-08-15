@@ -3,9 +3,9 @@ module Trip
     def initialize(params)
       @start_station = params[:start_station]
       @end_station = params[:end_station]
-      @journey_date = params[:journey_date]
+      @journey_date = Date.parse(params[:journey_date] )
       @journey_type = params[:journey_type]
-      @journey_date2 = params[:journey_date2]
+      @journey_date2 = Date.parse(params[:journey_date2] ) rescue nil
       @via_station = params[:via_station]
     end
 
@@ -18,11 +18,11 @@ module Trip
       tp = nil
       case @journey_type
         when "one_way"
-          tp = OneWayPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date,:journey_type => @journey_type)
+          tp = OneWayPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date.to_s,:journey_type => @journey_type)
         when "round_trip"
-          tp = RoundTripPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date,:journey_date2 => @journey_date2,:journey_type => @journey_type)
+          tp = RoundTripPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date.to_s,:journey_date2 => @journey_date2.to_s,:journey_type => @journey_type)
         when "multi_part"
-          tp = MultiPartPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date,:journey_date2 => @journey_date2,:via_station => @via_station,:journey_type => @journey_type)
+          tp = MultiPartPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date.to_s,:journey_date2 => @journey_date2.to_s,:via_station => @via_station,:journey_type => @journey_type)
       end
       raise "Invalid params" unless tp.valid_params?
       tp.plan
@@ -54,14 +54,15 @@ module Trip
                            :train_name => dtp.train.name,
                            :train_number => dtp.train.number,
                            :duration => dtp.duration,
-                           :departure_time => dep_train_station.departure_time,
-                           :arrival_time => arr_train_station.arrival_time
+                           :running_days => dtp.running_days,
+                           :departure_time => dep_train_station.departure_time.to_time.strftime("%H:%M"),
+                           :arrival_time => arr_train_station.arrival_time.to_time.strftime("%H:%M")
             }
           end
           train_info[:direct] = all_trains
         else
           train_paths.each_pair do |via_station, paths|
-            all_trains ||= {:to => [], :from => []}
+            all_trains = {:to => [], :from => []}
             stn_name = Station.find(via_station).name.to_sym
             [:to, :from].each do |way|
               paths[way].each do |tp|
@@ -73,8 +74,9 @@ module Trip
                   :train_name => tp.train.name,
                   :train_number => tp.train.number,
                   :duration => tp.duration,
-                  :departure_time => dep_train_station.departure_time,
-                  :arrival_time => arr_train_station.arrival_time
+                  :running_days => tp.running_days,
+                  :departure_time => dep_train_station.departure_time.to_time.strftime("%H:%M"),
+                  :arrival_time => arr_train_station.arrival_time.to_time.strftime("%H:%M")
                 }
               end
             end
@@ -97,8 +99,8 @@ module Trip
     end
 
     def plan
-      to_tp = OneWayPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date,:journey_type => "one_way").plan
-      fro_tp = OneWayPlanner.new(:start_station => @end_station,:end_station => @start_station,:journey_date => @journey_date2,:journey_type => "one_way").plan
+      to_tp = OneWayPlanner.new(:start_station => @start_station,:end_station => @end_station,:journey_date => @journey_date.to_s,:journey_type => "one_way").plan
+      fro_tp = OneWayPlanner.new(:start_station => @end_station,:end_station => @start_station,:journey_date => @journey_date2.to_s,:journey_type => "one_way").plan
       {:to => to_tp,:fro => fro_tp}
     end
 
@@ -114,9 +116,9 @@ module Trip
     end
 
     def plan
-      to_tp = OneWayPlanner.new(:start_station => @start_station,:end_station => @via_station,:journey_date => @journey_date,:journey_type => "one_way").plan
-      onward_tp = OneWayPlanner.new(:start_station => @via_station,:end_station => @end_station,:journey_date => @journey_date2,:journey_type => "one_way").plan
-      {:to => to_tp,:fro => fro_tp}
+      to_tp = OneWayPlanner.new(:start_station => @start_station,:end_station => @via_station,:journey_date => @journey_date.to_s,:journey_type => "one_way").plan
+      onward_tp = OneWayPlanner.new(:start_station => @via_station,:end_station => @end_station,:journey_date => @journey_date2.to_s,:journey_type => "one_way").plan
+      {:to => to_tp,:fro => onward_tp}
     end
   end
 
