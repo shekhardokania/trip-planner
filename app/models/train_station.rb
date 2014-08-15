@@ -12,9 +12,12 @@ class TrainStation < ActiveRecord::Base
     running_days_hash
   end
 
-  def runs_on_day?(day)
-    get_running_days[day]
+  def self.get_running_days_for_ui(code)
+    hash = get_running_days_from_code(code)
+    hash.keys.map{|m| m[0..2]}.join(',').upcase
   end
+
+
 
 
 end

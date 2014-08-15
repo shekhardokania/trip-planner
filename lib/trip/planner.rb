@@ -55,7 +55,7 @@ module Trip
                            :train_name => dtp.train.name,
                            :train_number => dtp.train.number,
                            :duration => dtp.duration,
-                           :running_days => dtp.running_days,
+                           :running_days => TrainStation.get_running_days_for_ui(dtp.running_days),
                            :departure_time => dep_train_station.departure_time.to_time.strftime("%H:%M"),
                            :arrival_time => arr_train_station.arrival_time.to_time.strftime("%H:%M")
             }
@@ -75,7 +75,7 @@ module Trip
                   :train_name => tp.train.name,
                   :train_number => tp.train.number,
                   :duration => tp.duration,
-                  :running_days => tp.running_days,
+                  :running_days => TrainStation.get_running_days_for_ui(tp.running_days),
                   :departure_time => dep_train_station.departure_time.to_time.strftime("%H:%M"),
                   :arrival_time => arr_train_station.arrival_time.to_time.strftime("%H:%M")
                 }
